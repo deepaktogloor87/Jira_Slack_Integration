@@ -1,3 +1,5 @@
+import shutil
+
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
@@ -10,8 +12,8 @@ from datetime import date, datetime
 
 Data = ConfigReader()
 config = Data.read_config_values()
-
 driver = webdriver.Chrome()
+today = date.today().strftime("%d-%m-%Y")
 
 def Key_Launch_Browser():
     url = config.get("URL","base_url")+config.get("URL","issue_url")
@@ -30,8 +32,8 @@ def Key_Take_Screenshot():
     now_time = datetime.now().strftime("%I-%M-%p")
     status_folder = create_folder_today("./snapshots")
     screenshots_folder = os.path.join(".",status_folder)
-    Key_Find_Element(driver, 10, By.XPATH, locators.Pichart_img).screenshot(f"{screenshots_folder}/snapshot1_name_{now_time}.png")
-    Key_Find_Element(driver, 10, By.XPATH, locators.Pichart_img).screenshot(f"{screenshots_folder}/snapshot2_name_{now_time}.png")
+    Key_Find_Element(driver, 10, By.XPATH, locators.SubUnit_img).screenshot(f"{screenshots_folder}/SubUnit_img_{now_time}.png")
+    Key_Find_Element(driver, 10, By.XPATH, locators.TimeAtWork_img).screenshot(f"{screenshots_folder}/TimeAtWork_img_{now_time}.png")
 
 def Key_Find_Element(driver, wait_time, locator_type, locator_value, condition_type="presence"):
     """
@@ -65,8 +67,8 @@ def Key_Find_Element(driver, wait_time, locator_type, locator_value, condition_t
         return None
 
 def create_folder_today(folder_path):
-    today = date.today().strftime("%d-%m-%Y")
-    folder_name = f"Status_{today}"
+    delete_folders_with_date(folder_path)
+    folder_name = today
     full_folder_path = os.path.join(folder_path, folder_name)
     if not os.path.exists(full_folder_path):
         os.mkdir(full_folder_path)
@@ -76,3 +78,26 @@ def create_folder_today(folder_path):
 
     return full_folder_path
 
+
+def delete_folders_with_date(folder_path):
+    if os.path.exists(folder_path) and os.path.isdir(folder_path):
+        # Loop through all subfolders in the specified path
+        for folder_name in os.listdir(folder_path):
+            folder_full_path = os.path.join(folder_path, folder_name)
+
+            # Check if the folder name matches the date format
+            try:
+                folder_date = datetime.strptime(folder_name, "%d-%m-%Y").date()
+                current_date = datetime.now().date()
+
+                # If the folder date is older than today, delete the folder
+                if folder_date < current_date:
+                    shutil.rmtree(folder_full_path)
+                    print(f"Deleted folder: {folder_full_path}")
+                else:
+                    print(f"Folder is from today or a future date. Not deleting: {folder_full_path}")
+            except ValueError:
+                # If the folder name doesn't match the date format, skip it
+                print(f"Skipping folder with non-date name: {folder_name}")
+    else:
+        print(f"Folder path does not exist: {folder_path}")
