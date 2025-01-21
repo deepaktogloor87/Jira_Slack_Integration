@@ -1,0 +1,1 @@
+expected_dashboard_text = 'Dashboard'
