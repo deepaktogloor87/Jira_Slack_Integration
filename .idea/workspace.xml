@@ -7,11 +7,11 @@
     <list default="true" id="1acdc8d1-3d0f-42de-8731-c8d78b4026f9" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/configurations/conf.ini" beforeDir="false" afterPath="$PROJECT_DIR$/configurations/conf.ini" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/snapshots/22-01-2025/SubUnit_img_03-10-AM.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/snapshots/22-01-2025/TimeAtWork_img_03-10-AM.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/snapshots/22-01-2025/SubUnit_img_03-28-AM.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/snapshots/22-01-2025/SubUnit_img_03-32-AM.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/snapshots/22-01-2025/SubUnit_img_03-33-AM.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/snapshots/22-01-2025/TimeAtWork_img_03-33-AM.png" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/t_library/custom.py" beforeDir="false" afterPath="$PROJECT_DIR$/t_library/custom.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/testcases/test_Send_Status.py" beforeDir="false" afterPath="$PROJECT_DIR$/testcases/test_Send_Status.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

@@ -10,7 +10,7 @@ from utility.read import ConfigReader
 from locators import locators
 from testdata import data
 import os
-from datetime import date, datetime
+from datetime import date, datetime, timedelta
 
 Data = ConfigReader()
 config = Data.read_config_values()
@@ -108,41 +108,55 @@ def Key_Upload_Status_Files_To_Slack():
     base_folder_path = "./snapshots"
     slack_token = config.get("SLACK","token")  # Replace with your actual Slack Bot Token
     channel_id = config.get("SLACK","channel")
+    time_window_minutes = 1
 
     # Initialize Slack client
     client = WebClient(token=slack_token)
 
-    # Get today's date
+    # Get today's date and folder path
     today_date = datetime.now().strftime("%d-%m-%Y")
-
-    # Construct the folder path
     folder_path = os.path.join(base_folder_path, today_date)
 
     # Heading for the Slack message
-    heading = f"*STATUS FOR THE DAY {today_date}* ✅️"
+    heading = (
+        f" 🗣📢 *Announcement* 🗣📢 \n"
+        f"------------------------------------\n"
+        f"*TODAY'S STATUS {today_date}* \n"
+        f"------------------------------------\n"
+        f"Check out the updates below! 👇"
+    )
 
     # Check if the folder exists
     if not os.path.exists(folder_path):
         print(f"Folder does not exist: {folder_path}")
         return
 
-    # Use glob to find all PNG files in the folder
+    # Calculate the time window
+    current_time = datetime.now()
+    time_threshold = current_time - timedelta(minutes=time_window_minutes)  # No NameError here
+
+    # Find all `.png` files in the folder
     png_files = glob.glob(os.path.join(folder_path, "*.png"))
 
-    if not png_files:
-        print(f"No PNG files found in folder: {folder_path}")
+    # Filter files by modification time
+    recent_files = [
+        file for file in png_files
+        if datetime.fromtimestamp(os.path.getmtime(file)) > time_threshold
+    ]
+
+    if not recent_files:
+        print(f"No recent PNG files found in the last {time_window_minutes} minutes in folder: {folder_path}")
         return
 
-    # Upload each PNG file to Slack
-    for file_path in png_files:
+    # Upload each recent PNG file to Slack
+    for file_path in recent_files:
         try:
-            # Use client.files_upload_v2() for better stability
             response = client.files_upload_v2(
                 channel=channel_id,
                 initial_comment=heading,
                 file=file_path
             )
-            print(f"Uploaded file: {file_path} to Slack. File ID: {response['file']['id']}")
+            print(f"Uploaded recent file: {file_path} to Slack. File ID: {response['file']['id']}")
         except SlackApiError as e:
             print(f"Error uploading file {file_path}: {e.response['error']}")
 
