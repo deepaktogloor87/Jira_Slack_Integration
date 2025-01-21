@@ -1,5 +1,7 @@
+import glob
 import shutil
-
+from slack_sdk import WebClient
+from slack_sdk.errors import SlackApiError
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
@@ -101,3 +103,47 @@ def delete_folders_with_date(folder_path):
                 print(f"Skipping folder with non-date name: {folder_name}")
     else:
         print(f"Folder path does not exist: {folder_path}")
+
+def Key_Upload_Status_Files_To_Slack():
+    base_folder_path = "./snapshots"
+    slack_token = config.get("SLACK","token")  # Replace with your actual Slack Bot Token
+    channel_id = config.get("SLACK","channel")
+
+    # Initialize Slack client
+    client = WebClient(token=slack_token)
+
+    # Get today's date
+    today_date = datetime.now().strftime("%d-%m-%Y")
+
+    # Construct the folder path
+    folder_path = os.path.join(base_folder_path, today_date)
+
+    # Heading for the Slack message
+    heading = f"*STATUS FOR THE DAY {today_date}* ✅️"
+
+    # Check if the folder exists
+    if not os.path.exists(folder_path):
+        print(f"Folder does not exist: {folder_path}")
+        return
+
+    # Use glob to find all PNG files in the folder
+    png_files = glob.glob(os.path.join(folder_path, "*.png"))
+
+    if not png_files:
+        print(f"No PNG files found in folder: {folder_path}")
+        return
+
+    # Upload each PNG file to Slack
+    for file_path in png_files:
+        try:
+            # Use client.files_upload_v2() for better stability
+            response = client.files_upload_v2(
+                channel=channel_id,
+                initial_comment=heading,
+                file=file_path
+            )
+            print(f"Uploaded file: {file_path} to Slack. File ID: {response['file']['id']}")
+        except SlackApiError as e:
+            print(f"Error uploading file {file_path}: {e.response['error']}")
+
+
