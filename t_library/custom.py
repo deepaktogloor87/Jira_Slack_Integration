@@ -38,20 +38,6 @@ def Key_Take_Screenshot():
     Key_Find_Element(driver, 10, By.XPATH, locators.TimeAtWork_img).screenshot(f"{screenshots_folder}/TimeAtWork_img_{now_time}.png")
 
 def Key_Find_Element(driver, wait_time, locator_type, locator_value, condition_type="presence"):
-    """
-    A reusable function for dynamic waits in Selenium.
-
-    Args:
-        driver (WebDriver): The Selenium WebDriver instance.
-        wait_time (int): Maximum wait time (in seconds).
-        locator_type (By): The type of locator (e.g., By.XPATH, By.ID, etc.).
-        locator_value (str): The value of the locator.
-        condition_type (str): The condition to wait for.
-                             Options: "presence", "visibility", "clickable"
-
-    Returns:
-        WebElement: The located web element if the condition is met.
-    """
     try:
         wait = WebDriverWait(driver, wait_time)
 
@@ -159,5 +145,3 @@ def Key_Upload_Status_Files_To_Slack():
             print(f"Uploaded recent file: {file_path} to Slack. File ID: {response['file']['id']}")
         except SlackApiError as e:
             print(f"Error uploading file {file_path}: {e.response['error']}")
-
-
