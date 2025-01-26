@@ -4,16 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1acdc8d1-3d0f-42de-8731-c8d78b4026f9" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.github/workflows/build.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/configurations/conf.ini" beforeDir="false" afterPath="$PROJECT_DIR$/configurations/conf.ini" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/snapshots/22-01-2025/SubUnit_img_06-32-PM.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/snapshots/22-01-2025/SubUnit_img_07-45-PM.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/snapshots/22-01-2025/TimeAtWork_img_06-32-PM.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/snapshots/22-01-2025/TimeAtWork_img_07-45-PM.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/t_library/custom.py" beforeDir="false" afterPath="$PROJECT_DIR$/t_library/custom.py" afterDir="false" />
-    </list>
+    <list default="true" id="1acdc8d1-3d0f-42de-8731-c8d78b4026f9" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
