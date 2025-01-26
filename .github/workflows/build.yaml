@@ -1,0 +1,29 @@
+jobs:
+  my_job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+
+      - name: Run tests
+        run: |
+          current_hour=$(date +"%H")
+          if [[ "${{ matrix.time }}" == "$current_hour" ]]; then
+            echo "Running tests at ${{ matrix.time }}"
+            pytest ./testcases/test.py -s -v 
+
+            # Slack notification (replace with your actual Slack webhook URL)
+            curl -X POST -H 'Content-type: application/json' \
+              -d '{"text": "Test execution completed!"}' \
+              https://hooks.slack.com/services/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
+          
+          fi
+
+on:
+  schedule:
+    - cron: '0 10 * * 1-6' # 10:00 AM IST (Monday to Saturday)
+    - cron: '0 18 * * 1-6' # 6:00 PM IST (Monday to Saturday)

@@ -18,6 +18,7 @@ driver = webdriver.Chrome()
 today = date.today().strftime("%d-%m-%Y")
 
 def Key_Launch_Browser():
+
     url = config.get("URL","base_url")+config.get("URL","issue_url")
     driver.get(url)
     driver.maximize_window()
